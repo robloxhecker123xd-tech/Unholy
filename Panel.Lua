@@ -150,8 +150,8 @@ G2L["e"]["TextYAlignment"] = Enum.TextYAlignment.Top;
 G2L["e"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
 G2L["e"]["RichText"] = true;
 G2L["e"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["e"]["MultiLine"] = true;
 G2L["e"]["ClearTextOnFocus"] = false;
-G2L["e"]["Multiline"] = true;
 G2L["e"]["PlaceholderText"] = [=[-- [[
 
 Made By Ep1kzkidd
